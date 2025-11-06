@@ -4,7 +4,7 @@ import java.io.File;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class OrdersManager {
+public class Orders {
 	
 	private LinkedList<Order> all_orders;
 	private Customers all_customers;
@@ -135,3 +135,4 @@ public class OrdersManager {
 	
 
 }
+
