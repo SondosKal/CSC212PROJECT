@@ -1,0 +1,162 @@
+
+import java.io.File;
+import java.util.Scanner;
+
+public class Products {
+    private LinkedList<Product> products;
+
+    public Products() {
+        products = new LinkedList<>();
+    }
+    
+    public Products(LinkedList<Product> input_products) {
+        products = input_products;
+    }
+
+
+    public Product Search_Product_by_id(int id) {
+        if (products.empty()) {
+            return null;
+        } else {
+            products.findFirst();
+            while (true) {
+                if (products.retrieve().getProductId() == id) {
+                    return products.retrieve();
+                }
+                if (products.last())
+                    break;
+                else
+                    products.findNext();
+            }
+        }
+        return null;
+    }
+
+    // Add new product
+    public void addProduct(Product p) {
+        if (Search_Product_by_id(p.getProductId()) == null) { // not Exist
+            products.addLast(p);
+            System.out.println("Product added: " + p.getName());
+        } else {
+            System.out.println("Product with ID " + p.getProductId() + " already exists!");
+        }
+    }
+
+    // Remove a product by ID
+    public void removeProduct(int id) {
+        if (Search_Product_by_id(id) != null) {
+            products.remove();
+            System.out.println("Product removed: " + id);
+        } else {
+            System.out.println("Product ID not found!");
+        }
+    }
+
+    // Update price or stock by ID
+    public void updateProduct(int id, Product p) {
+        Product old = Search_Product_by_id(id);
+        if (old == null)
+            System.out.println("not exist to make update");
+        else
+            old.UpdateProduct(p);
+    }
+
+    // Track out-of-stock products
+    public void displayOutOfStock() {
+        System.out.println("Out-of-stock products:");
+
+        if (products.empty()) {
+            System.out.println("no products exist");
+        } else {
+            boolean found = false;
+            products.findFirst();
+            while (true) {
+                if (products.retrieve().getStock() <= 0) {
+                    products.retrieve().display();
+                    found = true;
+                }
+                if (products.last())
+                    break;
+                else
+                    products.findNext();
+            }
+            if (!found)
+                System.out.println("✓ All products in stock!");
+        }
+    }
+
+    // Display all products
+    public void displayAllProducts() {
+        System.out.println("=== All Products ===");
+        if (products.empty()) {
+            System.out.println("no products exist");
+            return;
+        } else {
+            products.findFirst();
+            while (true) {
+                products.retrieve().display();
+                products.retrieve().displayReviews();
+                System.out.println("******************************");
+                System.out.println("******************************");
+                if (products.last())
+                    break;
+                else
+                    products.findNext();
+            }
+        }
+    }
+
+    public void assign(Review r) {
+        Product p = Search_Product_by_id(r.getProductId());
+        if (p == null)
+            System.out.println("not exist to assign review " + r.getReviewId() + " to it");
+        else
+            p.addReview(r);
+    }
+
+    public void assign2(Review r) {
+        if (!products.empty()) {
+            products.findFirst();
+            while (true) {
+                Product p1 = products.retrieve();
+                if (p1.getProductId() == r.getProductId()) {
+                    p1.addReview(r);
+                }
+                if (products.last())
+                    break;
+                else
+                    products.findNext();
+            }
+        }
+    }
+
+    public static Product convert_String_to_product(String Line) {
+        String a[] = Line.split(",");
+        Product p = new Product(Integer.parseInt(a[0]), a[1], Double.parseDouble(a[2]), Integer.parseInt(a[3]));
+        return p;
+    }
+
+    public void load_products(String fileName) {
+        try {
+            File f = new File(fileName);
+            Scanner read = new Scanner(f);
+
+            System.out.println("📂 Reading file: " + fileName);
+            System.out.println("-----------------------------");
+            read.nextLine().trim();
+
+            while (read.hasNextLine()) {
+                String line = read.nextLine().trim();
+                if (!line.isEmpty()) {
+                    Product p = convert_String_to_product(line);
+                    products.addLast(p);
+                }
+            }
+
+            read.close();
+            System.out.println("✅ File loaded successfully!\n");
+        } catch (Exception e) {
+            System.out.println("❌ Error reading file: " + e.getMessage());
+        }
+    }
+}
