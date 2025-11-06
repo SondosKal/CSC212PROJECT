@@ -1,23 +1,24 @@
-package project;
+package csc212project11;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Orders {
 	
 	private LinkedList<Order> all_orders;
-	private Customers all_customers;
+	private Customers all_Customers;
 	static DateTimeFormatter df= DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	
-	public Orders(LinkedList<Customer> input_customers, LinkedList<Oreder> all_orders) {
-		all_customers=new Customers(input_customers);
+	public Orders(LinkedList<Customer> input_customers, LinkedList<Order> all_orders) {
+		all_Customers=new Customers(input_customers);
 		this.all_orders= all_orders;
 	}
 	
 	public Orders() {
-		all_customers=new Customers();
+		all_Customers=new Customers();
 		all_orders=new LinkedList<>();
 	}
 	
@@ -55,6 +56,7 @@ public class Orders {
 		else p.addOrder(ord);
 	}
 	
+	
 	public void addOrder(Order ord) {
 		if(searchOrderById(ord.getOrderId())==null) {
 			all_orders.addLast(ord);
@@ -76,10 +78,10 @@ public class Orders {
 		
 		String productIds=a[2].trim().replaceAll("\"", "");
 		double totalPrice= Double.parseDouble(a[3]);
-		String orderDate= a[4];
+		LocalDate date=LocalDate.parse(a[4],df) ;
 		String status= a[5].trim();
 		
-		Order ord= new Order(OrderId,customerId,productIds,totalPrice,orderDate,status);
+		Order ord= new Order(OrderId,customerId,productIds,totalPrice,date,status);
 		return ord;
 	}
 	
@@ -104,7 +106,6 @@ public class Orders {
 			
 			}catch(Exception e) {
 				System.out.println("ERROR LOADING ALL ORDERS: "+ e.getMessage());
-
 			}
 }
 	
@@ -135,4 +136,3 @@ public class Orders {
 	
 
 }
-
