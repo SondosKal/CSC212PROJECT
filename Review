@@ -80,9 +80,5 @@ public class Review {
         System.out.println("------------------------------");
     }
 
-    public static void main(String[] args) {
-        Review r1 = new Review(1, 2, 111, 3, "good");
-        Review r2 = new Review(2, 5, 222, 2, "good");
-        r1.display();
-    }
+    
 }
