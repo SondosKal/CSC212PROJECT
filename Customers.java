@@ -1,3 +1,5 @@
+package csc212project11;
+
 import java.io.File;
 import java.util.Scanner;
 
@@ -87,28 +89,5 @@ public class Customers {
         } catch (Exception e) {
             System.out.println("✗ Error loading customers: " + e.getMessage());
         }
-    }
-
-    public static void test1() {
-        Customers all = new Customers();
-        Customer c1 = new Customer(201, "Omar Hassan", "omar.hassan@gmail.com");
-        Customer c2 = new Customer(202, "Nour Adel", "nour.adel@yahoo.com");
-
-        all.addCustomer(c1);
-        all.addCustomer(c2);
-
-        System.out.println("\nAfter adding manually:");
-        all.displayAll();
-    }
-
-    public static void test2() {
-        Customers all = new Customers();
-        all.loadCustomers("/Users/janamac31/Desktop/dataset/customers.csv");
-        all.displayAll();
-    }
-
-    public static void main(String[] args) {
-        test1();
-        test2();
     }
 }
