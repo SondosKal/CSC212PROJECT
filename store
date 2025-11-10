@@ -1,4 +1,4 @@
-package business_DS_Project;
+package csc212project11;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -29,20 +29,19 @@ public class Store {
 		all_Customers= new Customers(customers_list);
 		all_Orders=new Orders(customers_list,orders_list);	
 	}
-
 	
 	public static void Load_all() {
-		all_Products.load_products("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\products.csv");
-	    all_Customers.loadCustomers("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\customers.csv");
-	    all_Orders.loadOrders("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\Orders.csv");
-	    all_Reviews.load_revews("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\reviews.csv");
+		all_Products.load_products("C:\\Users\\sondo\\eclipse-workspace\\csc212project11\\products.csv");
+	    all_Customers.loadCustomers("C:\\Users\\sondo\\eclipse-workspace\\csc212project11\\customers.csv");
+	    all_Orders.loadOrders("C:\\Users\\sondo\\eclipse-workspace\\csc212project11\\orders.csv");
+	    all_Reviews.load_revews("C:\\Users\\sondo\\eclipse-workspace\\csc212project11\\reviews.csv");
 	}
 
 	public static void add_Customer(Customer c) {
 	    if (all_Customers != null)
 	        all_Customers.addCustomer(c);
 	    else
-	        System.out.println("⚠️ Error: Customer list not initialized!");
+	        System.out.println("Error: Customer list not initialized!");
 	}
 
 	public static void add_Product(Product p) {
@@ -68,7 +67,7 @@ public class Store {
 	        System.out.println("No products available.");
 	        return;
 	    }
-
+	    
 	    Product max1 = new Product(-1, "no product", -1, -1);
 	    Product max2 = new Product(-1, "no product", -1, -1);
 	    Product max3 = new Product(-1, "no product", -1, -1);
@@ -114,8 +113,8 @@ public class Store {
 	    }
 
 	    System.out.println("------------------------------");
-	}
-
+	
+	    
 
 	    LinkedList<Product> tempList = new LinkedList<>();
 	    products_list.findFirst();
@@ -153,11 +152,9 @@ public class Store {
 
 	        topList.addLast(maxProd);
 	    }
-	
+	}
 	
 
-
-	
 	public void showCommonHighRatedProducts2(int c1, int c2) {
 		LinkedList<Product> allProducts= all_Products.get_Products();
 		if(allProducts.empty()) {
@@ -203,6 +200,62 @@ public class Store {
 			System.out.println(" NO COMMON HIGH-RATED PRODUCTS FOUND");
 		
 	}
+	
+	
 
 	
+	
+
+	public static void main(String[] args) {
+		
+		Store s= new Store();
+		Scanner input= new Scanner(System.in);
+		int choice=0;
+		do {
+			System.out.println("==================WELCOME TO OUR STORE===================");
+
+			System.out.println("1.Read data from file.");
+			System.out.println("2.Add product.");
+			System.out.println("3.Add a customer.");
+			System.out.println("4.Add an order.");
+			System.out.println("5.Add a review.");
+			System.out.println("6.------");
+			System.out.println("7.Top 3 products by average rating.");
+			System.out.println("8.All orders between two dates.");
+			System.out.println("9.Common high rated products.");
+			System.out.print("Enter your choice");
+			
+			choice=input.nextInt();
+			
+
+			switch(choice) {
+			case 1:
+				Load_all();
+				break;
+			case 2: 
+				Product p=new Product(input.nextInt(),input.nextLine(),input.nextDouble(), input.nextInt());
+				add_Product(p);
+				break;
+				
+			case 3:
+			case 4:
+			case 5:
+				
+			
+			
+			}
+
+
+
+
+
+
+			
+		}while(choice!=0);
+		
+		
+		
+
+	}
+
 }
