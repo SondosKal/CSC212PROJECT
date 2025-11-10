@@ -1,4 +1,5 @@
-package csc212project11;
+package business_DS_Project;
+
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -28,6 +29,84 @@ public class Store {
 		all_Customers= new Customers(customers_list);
 		all_Orders=new Orders(customers_list,orders_list);	
 	}
+
+	
+	public static void Load_all() {
+		all_Products.load_products("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\products.csv");
+	    all_Customers.loadCustomers("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\customers.csv");
+	    all_Orders.loadOrders("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\Orders.csv");
+	    all_Reviews.load_revews("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\reviews.csv");
+	}
+
+	public static void add_Customer(Customer c) {
+	    if (all_Customers != null)
+	        all_Customers.addCustomer(c);
+	    else
+	        System.out.println("⚠️ Error: Customer list not initialized!");
+	}
+
+	public static void add_Product(Product p) {
+	    if (all_Products != null)
+	    	all_Products.addProduct(p);
+	    else
+	        System.out.println(" Error: Product list not initialized!");
+	}
+
+	public static void add_Order(Order o) {
+	    if (all_Orders != null)
+	        all_Orders.addOrder(o);
+	    else
+	        System.out.println("Error: Orders list not initialized!");
+	}
+
+	public static void add_Review(Review r) {
+	    all_Reviews.addReview(r);
+	}
+
+	public void displayTop3Products() {
+	    if (products_list.empty()) {
+	        System.out.println("No products available.");
+	        return;
+	    }
+
+	    LinkedList<Product> tempList = new LinkedList<>();
+	    products_list.findFirst();
+	    int count = 0; 
+	    while (true) {
+	        tempList.addLast(products_list.retrieve());
+	        count++;
+	        if (products_list.last()) break;
+	        products_list.findNext();
+	    }
+	    LinkedList<Product> topList = new LinkedList<>();
+	    int needed = Math.min(3, count);
+	    for (int k = 0; k < needed; k++) {
+	        if (tempList.empty()) break;
+	        tempList.findFirst();
+	        Product maxProd = tempList.retrieve();
+	        while (true) {
+	            Product cur = tempList.retrieve();
+	            if (cur.getAverageRating() > maxProd.getAverageRating()) {
+	                maxProd = cur;
+	            }
+	            if (tempList.last()) break;
+	            tempList.findNext();
+	        }
+
+	        tempList.findFirst();
+	        while (true) {
+	            if (tempList.retrieve() == maxProd) {
+	                tempList.remove();
+	                break;
+	            }
+	            if (tempList.last()) break;
+	            tempList.findNext();
+	        }
+
+	        topList.addLast(maxProd);
+	    }
+	}
+	
 
 
 	
