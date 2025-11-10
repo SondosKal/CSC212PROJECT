@@ -1,67 +1,93 @@
+package csc212project11;
+
 import java.io.File;
 import java.util.Scanner;
 
-public class Customer {
-    private int customerId;
-    private String name;
-    private String email;
-    private LinkedList<Order> orders;
+public class Customers {
+    private LinkedList<Customer> customers;
 
-    public Customer(int id, String name, String email) {
-        this.customerId = id;
-        this.name = name;
-        this.email = email;
-        this.orders = new LinkedList<>();
+    public Customers() {
+        customers = new LinkedList<>();
     }
 
-    public int getCustomerId() { 
-        return customerId; 
+    Customers(LinkedList<Customer> input_customers) {
+        customers = input_customers;
     }
 
-    public String getName() { 
-        return name; 
+    public LinkedList<Customer> get_customers() {
+        return customers;
     }
 
-    public String getEmail() { 
-        return email; 
+    public Customer searchById(int id) {
+        if (customers.empty())
+            return null;
+
+        customers.findFirst();
+        while (true) {
+            if (customers.retrieve().getCustomerId() == id)
+                return customers.retrieve();
+
+            if (customers.last())
+                break;
+
+            customers.findNext();
+        }
+        return null;
     }
 
-    public void addOrder(Order o) {
-        orders.addLast(o);
+    public void addCustomer(Customer c) {
+        if (searchById(c.getCustomerId()) == null) {
+            customers.addLast(c);
+            System.out.println("✓ Added customer: " + c.getName());
+        } else {
+            System.out.println("✗ Customer with ID " + c.getCustomerId() + " already exists!");
+        }
     }
 
-    public void display() {
-        System.out.println("Customer ID: " + customerId);
-        System.out.println("Name: " + name);
-        System.out.println("Email: " + email);
-        System.out.println("------------------------------------------------");
-    }
-
-    public void displayOrders() {
-        if (orders.empty()) {
-            System.out.println("No orders for customer " + name);
+    public void displayAll() {
+        if (customers.empty()) {
+            System.out.println("No customers found!");
             return;
         }
 
-        System.out.println("Orders for " + name + ":");
-        orders.findFirst();
+        System.out.println("=== All Customers ===");
+        customers.findFirst();
         while (true) {
-            orders.retrieve().display();
-            if (orders.last())
+            customers.retrieve().display();
+            if (customers.last())
                 break;
-            orders.findNext();
+            customers.findNext();
         }
     }
 
-    public static void test2() {
-        Customer c1 = new Customer(201, "Omar Hassan", "omar.hassan@gmail.com");
-        Customer c2 = new Customer(202, "Nour Adel", "nour.adel@yahoo.com");
+    public void loadCustomers(String fileName) {
+        try {
+            File f = new File(fileName);
+            Scanner read = new Scanner(f);
+            System.out.println("→ Reading file: " + fileName);
+            System.out.println();
 
-        c1.display();
-        c2.display();
-    }
+            if (read.hasNextLine())
+                read.nextLine();
 
-    public static void main(String[] args) {
-        test2();
+            while (read.hasNextLine()) {
+                String line = read.nextLine().trim();
+                if (line.isEmpty())
+                    continue;
+
+                String[] a = line.split(",");
+                int id = Integer.parseInt(a[0].trim());
+                String name = a[1].trim();
+                String email = a[2].trim();
+
+                Customer c = new Customer(id, name, email);
+                customers.addLast(c);
+            }
+
+            read.close();
+            System.out.println("✓ Customers loaded successfully!\n");
+        } catch (Exception e) {
+            System.out.println("✗ Error loading customers: " + e.getMessage());
+        }
     }
 }
