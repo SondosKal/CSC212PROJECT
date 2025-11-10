@@ -61,7 +61,7 @@ public class Orders {
 		if(searchOrderById(ord.getOrderId())==null) {
 			all_orders.addLast(ord);
 			assign(ord);
-			System.out.println("ORDER ADDED SUCCESSFULLY!!!"+ ord.getOrderId());
+			//System.out.println("ORDER ADDED SUCCESSFULLY!!!"+ ord.getOrderId());
 		} else {
 			System.out.println("Order with ID "+ ord.getOrderId()+ " ALREADY EXISTS!!");
 		}
