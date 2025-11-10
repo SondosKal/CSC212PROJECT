@@ -1,5 +1,3 @@
-package business_DS_Project;
-
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -42,7 +40,7 @@ public class Store {
 	    if (all_Customers != null)
 	        all_Customers.addCustomer(c);
 	    else
-	        System.out.println("⚠️ Error: Customer list not initialized!");
+	        System.out.println("Error: Customer list not initialized!");
 	}
 
 	public static void add_Product(Product p) {
