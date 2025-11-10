@@ -62,10 +62,58 @@ public class Store {
 	}
 
 	public void displayTop3Products() {
-	    if (products_list.empty()) {
-	        System.out.println("No products available.");
-	        return;
-	    }
+    if (products_list.empty()) {
+        System.out.println("No products available.");
+        return;
+    }
+
+    Product max1 = new Product(-1, "no product", -1, -1);
+    Product max2 = new Product(-1, "no product", -1, -1);
+    Product max3 = new Product(-1, "no product", -1, -1);
+
+    products_list.findFirst();
+    while (true) {
+        Product cur = products_list.retrieve();
+
+        if (cur.getAverageRating() > max1.getAverageRating()) {
+            max3 = max2;
+            max2 = max1;
+            max1 = cur;
+        } else if (cur.getAverageRating() > max2.getAverageRating()) {
+            max3 = max2;
+            max2 = cur;
+        } else if (cur.getAverageRating() > max3.getAverageRating()) {
+            max3 = cur;
+        }
+
+        if (products_list.last()) break;
+        products_list.findNext();
+    }
+
+    System.out.println("\n★ Top Products by Average Rating:");
+
+    int rank = 1;
+    if (max1 != null) {
+        System.out.println(rank++ + ". Product ID: " + max1.getProductId()
+            + " | Name:" + max1.getName()
+            + " | Avg Rating: " + String.format("%.2f", max1.getAverageRating()));
+    }
+
+    if (max2 != null) {
+        System.out.println(rank++ + ". Product ID: " + max2.getProductId()
+            + " | Name:" + max2.getName()
+            + " | Avg Rating: " + String.format("%.2f", max2.getAverageRating()));
+    }
+
+    if (max3 != null) {
+        System.out.println(rank++ + ". Product ID: " + max3.getProductId()
+            + " | Name:" + max3.getName()
+            + " | Avg Rating: " + String.format("%.2f", max3.getAverageRating()));
+    }
+
+    System.out.println("------------------------------");
+}
+
 
 	    LinkedList<Product> tempList = new LinkedList<>();
 	    products_list.findFirst();
