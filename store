@@ -1,0 +1,87 @@
+package csc212project11;
+import java.time.LocalDate;
+import java.util.Scanner;
+
+
+public class Store {
+	
+	private static LinkedList<Customer> customers_list;
+	private static LinkedList<Order> orders_list;
+	private static LinkedList<Product> products_list;
+	private static LinkedList<Review> reviews_list;
+	
+	private static Reviews all_Reviews;
+	private static Customers all_Customers;
+	private static Orders all_Orders;
+	private static Products all_Products;
+	
+	public Store() {
+		
+		customers_list= new LinkedList<Customer>();
+		orders_list= new LinkedList<Order>();
+		products_list= new LinkedList<Product>();
+		reviews_list= new LinkedList<Review>();
+		
+		
+		all_Products= new Products(products_list);
+		all_Reviews= new Reviews(reviews_list,products_list,customers_list);
+		all_Customers= new Customers(customers_list);
+		all_Orders=new Orders(customers_list,orders_list);	
+	}
+
+
+	
+	public void showCommonHighRatedProducts2(int c1, int c2) {
+		LinkedList<Product> allProducts= all_Products.get_Products();
+		if(allProducts.empty()) {
+			System.out.println("NO PRODUCTS FOUND!");
+			return;
+		}
+		System.out.println("===COMMON HIGH RATED PRODUTS (>4)=====");
+		
+		boolean anyfound=false;
+		allProducts.findFirst();
+		while(true) {
+			Product p= allProducts.retrieve();
+			int pid= p.getProductId();
+			
+			if(p.getAverageRating()>4) {
+				boolean found1=false;
+				boolean found2=false;
+				
+				if(!reviews_list.empty()) {
+					reviews_list.findFirst();
+					while(true){
+						Review r= reviews_list.retrieve();
+						
+						if(r.getProductId()==pid) {
+							if(r.getCustomerId()==c1)found1=true;
+							if(r.getCustomerId()==c2)found2=true;			
+						}
+						
+						if(reviews_list.last())break;
+						reviews_list.findNext();
+					}
+				}
+				
+				if(found1&&found2) {}
+				System.out.println("PRODUCT: "+p.getName()+
+						"| ID: "+pid+
+						"| AVERAGE RATING: "+p.getAverageRating());
+				anyfound=true;
+
+			}
+		}
+		if(!anyfound)
+			System.out.println(" NO COMMON HIGH-RATED PRODUCTS FOUND");
+		
+	}
+
+	public static void main(String[] args) {
+		
+		
+		
+
+	}
+
+}
