@@ -205,6 +205,44 @@ public class Store {
 
 	
 	
+	
+	
+	public static void displayAllOrders_between2dates(LocalDate d1, LocalDate d2) {
+	    if (orders_list.empty()) {
+	        System.out.println("No orders found!");
+	        return;
+	    }
+
+	    System.out.println("OrderID\tCustomerID\tProductIDs\tTotalPrice\tDate\tStatus");
+	    System.out.println("----------------------------------------------------------");
+
+	    orders_list.findFirst();
+
+	    while (true) {
+	        Order o = orders_list.retrieve();
+
+	        // تحقق أن تاريخ الطلب بين d1 و d2
+	        if (o.getOrderDate().compareTo(d1) > 0 && o.getOrderDate().compareTo(d2) < 0) {
+	            // اطبع تفاصيل الطلب أو الرقم فقط مثل بالصورة
+	            System.out.println(o.getOrderId());
+	            // أو لو تبغى التفاصيل كلها بدل الـ ID فقط:
+	            // o.display();
+	        }
+
+	        if (orders_list.last())
+	            break;
+	        orders_list.findNext();
+	    }
+
+	   
+	}
+	
+	
+	
+	
+	
+	
+	
 
 	public static void main(String[] args) {
 		
@@ -219,10 +257,13 @@ public class Store {
 			System.out.println("3.Add a customer.");
 			System.out.println("4.Add an order.");
 			System.out.println("5.Add a review.");
-			System.out.println("6.------");
-			System.out.println("7.Top 3 products by average rating.");
-			System.out.println("8.All orders between two dates.");
-			System.out.println("9.Common high rated products.");
+			System.out.println("6.Display All Customers");
+			System.out.println("7.Display All Orders");
+			System.out.println("8.Display All Products");
+			System.out.println("9.Top 3 products by average rating.");
+			System.out.println("10.All orders between two dates.");
+			System.out.println("11.Common high rated products.");
+			System.out.println("12.Exit ");
 			System.out.print("Enter your choice");
 			
 			choice=input.nextInt();
@@ -237,10 +278,66 @@ public class Store {
 				add_Product(p);
 				break;
 				
-			case 3:
-			case 4:
-			case 5:
+			case 3:Customer c = new Customer(input.nextInt(), input.next(), input.next());
+            add_Customer(c);
+            break;
+
+            
+			case 4:Order o = new Order(input.nextInt(), input.nextInt(), input.next(),
+                    input.nextDouble(), LocalDate.parse(input.next()), input.next());
+            add_Order(o);
+            break;
+
+            
+			case 5: Review r = new Review(input.nextInt(), input.nextInt(),
+                    input.nextInt(), input.nextInt() ,input.next());
+            add_Review(r);
+            break;
+
+            
+			case 6: all_Customers.displayAll();
 				
+				
+			case 7:all_Orders.displayAllOrders();
+				
+				
+			case 8: all_Products.displayAllProducts();
+				
+				
+			case 9:s.displayTop3Products() ;
+
+				
+				
+			case 10: 
+            s.displayAllOrders_between2dates(
+	                LocalDate.of(2025, 2, 1),
+	                LocalDate.of(2025, 2, 9)
+	            );
+	            break;
+	            
+	            
+	            
+			case 11:System.out.print("Enter first customer ID: ");
+		    int c1 = input.nextInt();
+		    System.out.print("Enter second customer ID: ");
+		    int c2 = input.nextInt();
+		    s. showCommonHighRatedProducts2(c1, c2);
+		    break;
+
+
+				
+				
+			case 12:
+				 System.out.println("Good Bye");
+			break;
+				
+				
+			default: System.out.println("");
+            
+            
+            
+            
+            
 			
 			
 			}
@@ -258,4 +355,3 @@ public class Store {
 
 	}
 
-}
