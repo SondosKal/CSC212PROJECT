@@ -15,6 +15,7 @@ public class Customer {
         this.name = name;
         this.email = email;
         this.orders = new LinkedList<>();
+        reviews=new LinkedList<>();
     }
 
     public int getCustomerId() { 
@@ -59,6 +60,23 @@ public class Customer {
             if (orders.last())
                 break;
             orders.findNext();
+        }
+    }
+    
+    
+    public void displayReviews() {
+        if (reviews.empty()) {
+            System.out.println("No reviews for customer " + name);
+            return;
+        }
+
+        System.out.println("Reviews for " + name + ":");
+        reviews.findFirst();
+        while (true) {
+            reviews.retrieve().display();
+            if (reviews.last())
+                break;
+            reviews.findNext();
         }
     }
 }
