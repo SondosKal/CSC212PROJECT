@@ -61,11 +61,14 @@ public class Orders {
 		if(searchOrderById(ord.getOrderId())==null) {
 			all_orders.addLast(ord);
 			assign(ord);
-			//System.out.println("ORDER ADDED SUCCESSFULLY!!!"+ ord.getOrderId());
+			//System.out.println("ORDER ADDED SUCCESSFULLY!!!");
 		} else {
 			System.out.println("Order with ID "+ ord.getOrderId()+ " ALREADY EXISTS!!");
 		}
 	}
+	
+	
+	
 	
 	
 	public static Order convert_String_to_order(String Line) {
