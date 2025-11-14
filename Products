@@ -6,13 +6,16 @@ import java.util.Scanner;
 
 public class Products {
     private LinkedList<Product> products;
-
-    public Products() {
+ Products() {
         products = new LinkedList<>();
     }
     
     public Products(LinkedList<Product> input_products) {
         products = input_products;
+    }
+    
+    public LinkedList<Product> get_Products(){
+    	return products;
     }
 
 
@@ -97,7 +100,7 @@ public class Products {
             products.findFirst();
             while (true) {
                 products.retrieve().display();
-                products.retrieve().displayReviews();
+                //products.retrieve().displayReviews();
                 System.out.println("******************************");
                 System.out.println("******************************");
                 if (products.last())
@@ -145,7 +148,7 @@ public class Products {
 
             System.out.println("📂 Reading file: " + fileName);
             System.out.println("-----------------------------");
-            read.nextLine().trim();
+            read.nextLine();
 
             while (read.hasNextLine()) {
                 String line = read.nextLine().trim();
