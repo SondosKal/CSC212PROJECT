@@ -5,12 +5,15 @@ import java.io.File;
 import java.util.Scanner;
 
 public class Reviews {
-    private static LinkedList<Review> reviews;
+    private  LinkedList<Review> reviews;
     private Products all_products;
     private Customers all_Customers;
 
-    public Reviews(LinkedList<Review> reviews, LinkedList<Product> input_products, LinkedList<Customer> input_customers) {
-        this.reviews = reviews;
+    public Reviews(LinkedList<Review> input_reviews, LinkedList<Product> input_products, LinkedList<Customer> input_customers) {
+    	if (input_reviews == null)
+            this.reviews = new LinkedList<>();
+        else
+            this.reviews = input_reviews;
         all_products = new Products(input_products);
         all_Customers = new Customers(input_customers);
     }
@@ -66,7 +69,6 @@ public class Reviews {
             reviews.addLast(r);
             assign_to_product(r);
             assign_to_customer(r);
-            System.out.println("Review added: " + r.getReviewId());
         } else {
             System.out.println("Review with ID " + r.getReviewId() + " already exists!");
         }
@@ -116,7 +118,7 @@ public class Reviews {
     }
 
 
-    public void load_revews(String fileName) {
+    public void load_reviews(String fileName) {
         try {
             File f = new File(fileName);
             Scanner read = new Scanner(f);
@@ -124,6 +126,7 @@ public class Reviews {
             System.out.println("📂 Reading file: " + fileName);
             System.out.println("-------------------------------------");
             read.nextLine().trim();
+
             while (read.hasNextLine()) {
                 String line = read.nextLine().trim();
                 if (!line.isEmpty()) {
