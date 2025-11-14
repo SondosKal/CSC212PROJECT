@@ -123,7 +123,7 @@ public class Reviews {
             File f = new File(fileName);
             Scanner read = new Scanner(f);
 
-            System.out.println("📂 Reading file: " + fileName);
+            System.out.println("Reading file: " + fileName);
             System.out.println("-------------------------------------");
             read.nextLine().trim();
 
@@ -137,9 +137,9 @@ public class Reviews {
 
             read.close();
             System.out.println("-------------------------------------");
-            System.out.println("✅ File loaded successfully!\n");
+            System.out.println("File loaded successfully!\n");
         } catch (Exception e) {
-            System.out.println("❌ Error reading file: " + e.getMessage());
+            System.out.println("Error reading file: " + e.getMessage());
         }
     }
 
