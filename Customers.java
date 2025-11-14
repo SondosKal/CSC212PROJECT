@@ -64,7 +64,7 @@ public class Customers {
         try {
             File f = new File(fileName);
             Scanner read = new Scanner(f);
-            System.out.println("→ Reading file: " + fileName);
+            System.out.println("Reading file: " + fileName);
             System.out.println();
 
             if (read.hasNextLine())
@@ -85,9 +85,9 @@ public class Customers {
             }
 
             read.close();
-            System.out.println("✓ Customers loaded successfully!\n");
+            System.out.println("Customers loaded successfully!\n");
         } catch (Exception e) {
-            System.out.println("✗ Error loading customers: " + e.getMessage());
+            System.out.println("Error loading customers: " + e.getMessage());
         }
     }
 }
